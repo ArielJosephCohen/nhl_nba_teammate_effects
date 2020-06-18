@@ -43,3 +43,48 @@ When I started this project, I had expected it to move rather quickly. It did no
 
 ### Creating relative measures of player performance on a per-season basis.
 
+Having gathered all my data, I was ready to develop some metrics to better understand and evaluate the performance of each individual player on a per-season basis. I'd like to stress this per-season basis. My ultimate metric I create at the very end of this process displays how good a player is good compared to his competition THAT YEAR ONLY. Some years are just better than other years. Sometimes, the whole league improves and distinguishing which player reigns supreme can be difficult. The distribution of players on the "great to terrible scale" is in a constant state of flux. I tend to believe every sports league in North America tends to follow a normal distribution with regards to talent. Nevertheless, the mean can shift, the variance can increase or decrease, and the kurtosis and skewness may move around.
+
+![normal-dist](images/normal_dist.png)
+
+The point is, we need to know the answer to the following question: was the best player in the league playing with other players who stood out amongst the rest of the league or were they just average or even below average. To accomplish this task, I divided every player's statistics by the mean value of that statistic during each season. Example: if the average goals scored in 2008 per player were 10 goals and a guy like Sidney Crosby scored 35 goals (made-up numbers), I would assign a 3.5 to goals (35 goals / 10 average). For skaters, all my stats I used to later develop a metric of performance were positive (except penalty minutes) in the sense that more is better. This was not the case for goalies and nba players. For examples, high goals-against-averages or turnover-ratios (for goalies and nba players, respectively) are not desirable stats. After finding out the ratio of each statistic to league average for every season and every player in NBA and NHL history, I was now very close to that ending and defining evaluation metric.
+
+To get a final metric for player performance, I basically did the following three tasks. The first thing was apply Max-Absolute-Scaling to remove imnpacts from magnitude alone and put my data on a even level across all statistics. The effect, mathematically is that all my data will be on the interval [0,1]. Next, I took the arithmetic mean of key statistics (not all statistics. I did't include things like age or 3 pointers attempted in the NBA just to name a few). I also accounted for "good sats" vs. "bad stats." Bad stats weighed your rating down and good stats improved your rating. In addition, I did a little extra "custom" feature scaling such as adjusting the impact of statistics that deserve a larger impact or important statistics that still deserve a reduced impact. Also, for defensemen and forwards - who are both skaters - I created two separate metrics; one for defensive impact and one for offensive impacty. Having gotten my mean metric which described all the player's relevant skills and evaluated their impact, I took my final step by dividing this statistic over the maximum overall mean metric across each season to account for variability in skill level (and luck I suppose) across seasons as discussed earlier.
+
+### Here is a look at my function (for NHL skaters, as an example) and some of the outcomes.
+
+![scalefunc1](images/scale_and_mtrc_1.png)
+
+![scalefunc2](images/scale_and_mtrc2.png)
+
+## and the results...
+
+## for basketball...
+
+![nba_giannis](images/nba_mil.png)
+
+## and for hockey...
+
+![nhl_tor](images/nhl_tor.png)
+
+### Grouping teams with an award winner using my custom metric.
+
+Having now created a custom metric which effectively evaluates the effectiveness and value each player adds to their team across NHL defensemen, forwards, and goalies as well as all NBA players, I was ready to group this data by year, team, and position and look at the median, maximum, and (of course) mean values of my metric for the team surrounding each MVP and Hart Trophy winner. I decided to export this data to Excel as there were a couple of tasks I felt would be short and just easier to do in Excel which would help me capture the contribution of each player on the team. I will provide an image below to give you an idea of what these data frames would look like in pandas.
+
+#### My photos reflect many seasons for goalies, the 2011 season which saw Derrick Rose win the MVP in the NBA with the Chicago Bulls, and the 2019 season which saw Nikita Kucherov win the Hart Trophy in the NHL with the Tampa Bay Lightning.
+
+# Rose (at PG).
+
+![derrick_rose](images/rose_mvp.png)
+![derrick_rose](images/drose_mvp.png)
+
+# Kucherov (at RW).
+
+![Nikita_kucherov](images/kucherov_mvp.png)
+![Nikita_kucherov](images/tbl_kucherov_mvp.png)
+
+# Many Goalies
+#### I picked Gretzky because he won all those "EDM" trophies.
+
+![gretzky](images/gretzky_mvp.png)
+![goalies](images/many_goalies.png)
